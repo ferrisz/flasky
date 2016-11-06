@@ -26,4 +26,4 @@ def baidu():
 
 
 if __name__ == '__main__':
-    app.run(host=app.config.get('HOST',None),port=app.config.get('PORT',None)) kjkk
+    app.run(host=app.config.get('HOST',None),port=app.config.get('PORT',None))
