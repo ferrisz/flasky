@@ -20,7 +20,7 @@ def user(name):
     return '<h1>Hello,%s!' % name
 @app.route('/baidu')
 def baidu():
-    return redirect('https://www.baidu.com')a
+    return redirect('https://www.baidu.com')
 
 
 
