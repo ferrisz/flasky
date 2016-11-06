@@ -20,10 +20,10 @@ def user(name):
     return '<h1>Hello,%s!' % name
 @app.route('/baidu')
 def baidu():
-    return redirect('https://www.baidu.com')a
+    return redirect('https://www.baidu.com')
 
 
 
 
 if __name__ == '__main__':
-    app.run(host=app.config.get('HOST',None),port=app.config.get('PORT',None))
+    app.run(host=app.config.get('HOST',None),port=app.config.get('PORT',None)) kjkk
