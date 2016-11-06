@@ -6,6 +6,7 @@ from flask import request
 from flask import make_response
 from flask import redirect
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 
 
@@ -13,6 +14,8 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__)
 
 bootstrap = Bootstrap(app)
+
+moment = Moment(app)
 
 @app.route('/')
 def index():
