@@ -25,6 +25,8 @@ moment = Moment(app)
 class NameForm(Form):
     name = StringField('What is your name?',validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
 @app.route('/')
 def index():
     return render_template('index.html',current_time=datetime.utcnow())
