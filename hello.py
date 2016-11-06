@@ -15,6 +15,7 @@ from wtforms.validators import DataRequired
 
 app = Flask(__name__)
 app.config['SECERT_KEY'] = 'hard to guess string'
+app.config['WTF_CSRF_ENABLED'] = False
 
 bootstrap = Bootstrap(app)
 
@@ -29,7 +30,8 @@ class NameForm(Form):
 
 @app.route('/')
 def index():
-    return render_template('index.html',current_time=datetime.utcnow())
+    form = NameForm()
+    return render_template('index.html',current_time=datetime.utcnow(),form=form)
 
 
 @app.route('/user/<name>')
