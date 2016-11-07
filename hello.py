@@ -1,6 +1,7 @@
 #!/usr/local/python
 # coding = utf-8
 
+import os
 from flask import Flask, render_template, session, redirect, url_for, flash
 from flask import request
 from flask import make_response
@@ -11,18 +12,60 @@ from datetime import datetime
 from flask_wtf import Form
 from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired
+from flask_sqlalchemy import SQLAlchemy
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+# DatabaseConfig
+server_type = 'mysql'  # mysql pg
+server_host = '119.29.136.24'
+server_port = '3306'
+server_user = 'root'
+server_pass = '123456ZHOu'
+server_db = 'flasky'
+server_charset = 'utf8mb4'
+
+# DefineDatebaseType
+serverHeader = ''
+if server_type == 'mysql':
+    serverHeader = 'mysql://'
+elif server_type == 'pg':
+    serverHeader = 'postgresql://'
 
 app = Flask(__name__)
-app.config['SECERT_KEY'] = 'hard to guess string'
-app.config['WTF_CSRF_ENABLED'] = False
+app.config['SECRET_KEY'] = 'hard to guess string'
+app.config['SQLALCHEMY_DATABASE_URI'] =\
+    serverHeader + server_user + ':' + server_pass + '@' + server_host\
+    + ':' + server_port + '/' + server_db + '?charset=' + server_charset
+app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+db = SQLAlchemy(app)
+db.create_all()
 
 
 class NameForm(Form):
     name = StringField('What is your name?',validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Interval,primary_key=True)
+    name = db.Column(db.String(64),unique=True)
+    users = db.relationship('User', backref='role', lazy='dynamic')
+
+    def __repr__(self):
+        return '<Role %r>' % self.name
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Interval, primary_key=True)
+    username = db.Column(db.String(64), unique=True, index=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -37,14 +80,21 @@ def index():
     # name = None
     form = NameForm()
     if form.validate_on_submit():
-        old_name = session.get('name')
-        if old_name is not None and old_name != form.name.data:
-            flash('Looks like you have changed your name!')
+        user = User.query.filter_by(username=form.name.data).first()
+        if user is None:
+            user = User(username=form.name.data)
+            db.session.add(user)
+            session['known'] = False
+        else:
+            session['known'] = True
+        # old_name = session.get('name')
+        # if old_name is not None and old_name != form.name.data:
+        #     flash('Looks like you have changed your name!')
         # name = form.name.data
         session['name'] = form.name.data
-        # form.name.data = ''
+        form.name.data = ''
         return redirect(url_for('index'))
-    return render_template('index.html',form=form,name=session.get('name'))
+    return render_template('index.html',current_time=datetime.utcnow(),form=form,name=session.get('name'),known=session.get('known', False))
 
 
 @app.route('/user/<name>')
