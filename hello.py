@@ -20,8 +20,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 server_type = 'mysql'  # mysql pg
 server_host = '119.29.136.24'
 server_port = '3306'
-server_user = 'root'
-server_pass = '123456ZHOu'
+server_user = 'flasky'
+server_pass = 'flasky'
 server_db = 'flasky'
 server_charset = 'utf8mb4'
 
