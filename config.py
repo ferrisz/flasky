@@ -40,7 +40,7 @@ class DevelopmentConfig(Config):
     elif server_type == 'pg':
         serverHeader = 'postgresql://'
 
-    SQLALCHEMY_DABATESE_URI = serverHeader + server_user + ':' + server_pass + '@' + server_host\
+    SQLALCHEMY_DATABASE_URI = serverHeader + server_user + ':' + server_pass + '@' + server_host\
     + ':' + server_port + '/' + server_db + '?charset=' + server_charset
 
 class TestingConfig(Config):
@@ -62,7 +62,7 @@ class TestingConfig(Config):
     elif server_type == 'pg':
         serverHeader = 'postgresql://'
 
-    SQLALCHEMY_DABATESE_URI = serverHeader + server_user + ':' + server_pass + '@' + server_host \
+    SQLALCHEMY_DATABASE_URI = serverHeader + server_user + ':' + server_pass + '@' + server_host \
                               + ':' + server_port + '/' + server_db + '?charset=' + server_charset
 
 class ProductionConfig(Config):
@@ -82,7 +82,7 @@ class ProductionConfig(Config):
     elif server_type == 'pg':
         serverHeader = 'postgresql://'
 
-    SQLALCHEMY_DABATESE_URI = serverHeader + server_user + ':' + server_pass + '@' + server_host \
+    SQLALCHEMY_DATABASE_URI = serverHeader + server_user + ':' + server_pass + '@' + server_host \
                               + ':' + server_port + '/' + server_db + '?charset=' + server_charset
 
 config = {
