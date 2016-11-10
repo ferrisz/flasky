@@ -13,6 +13,7 @@ from flask_wtf import Form
 from wtforms import StringField,SubmitField
 from wtforms.validators import DataRequired
 from flask_sqlalchemy import SQLAlchemy
+from flask_script import Shell,Manager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -39,11 +40,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] =\
     + ':' + server_port + '/' + server_db + '?charset=' + server_charset
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
+
+
 bootstrap = Bootstrap(app)
+manager = Manager(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
 
-
+def make_shell_context():
+    return dict(app=app, db=db, User=User, Role=Role)
+manager.add_command("shell",Shell(make_context=make_shell_context))
 
 class NameForm(Form):
     name = StringField('What is your name?',validators=[DataRequired()])
@@ -117,3 +123,4 @@ def user(name):
 
 if __name__ == '__main__':
     app.run(host=app.config.get('HOST',None),port=app.config.get('PORT',None))
+    # manager.run()
