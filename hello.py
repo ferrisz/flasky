@@ -28,7 +28,7 @@ server_charset = 'utf8mb4'
 # DefineDatebaseType
 serverHeader = ''
 if server_type == 'mysql':
-    serverHeader = 'mysql://'
+    serverHeader = 'mysql+pymysql://'
 elif server_type == 'pg':
     serverHeader = 'postgresql://'
 
@@ -42,7 +42,7 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 db = SQLAlchemy(app)
-db.create_all()
+
 
 
 class NameForm(Form):
@@ -51,7 +51,7 @@ class NameForm(Form):
 
 class Role(db.Model):
     __tablename__ = 'roles'
-    id = db.Column(db.Interval,primary_key=True)
+    id = db.Column(db.Integer,primary_key=True)
     name = db.Column(db.String(64),unique=True)
     users = db.relationship('User', backref='role', lazy='dynamic')
 
@@ -60,12 +60,23 @@ class Role(db.Model):
 
 class User(db.Model):
     __tablename__ = 'users'
-    id = db.Column(db.Interval, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, index=True)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+# db.drop_all()
+# db.create_all()
+# admin_role = Role(name='Admin')
+# mod_role = Role(name='Moderator')
+# user_role = Role(name='User')
+# user_john = User(username='john',role=admin_role)
+# user_susan = User(username='susan',role=user_role)
+# user_david = User(username='david',role=user_role)
+# db.session.add_all([admin_role,mod_role,user_role,user_john,user_susan,user_david])
+# db.session.commit()
 
 @app.errorhandler(404)
 def page_not_found(e):
