@@ -60,6 +60,9 @@ class User(UserMixin, db.Model):
         return True
 
 
+
+
+
 @login_manger.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
