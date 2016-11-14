@@ -15,7 +15,7 @@ class Config:
     MAIL_PASSWORD = '12345zxcvb'
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SUBJECT_SENDER = 'Flasky Admin <noreply@zhoufeiyu.com>'
-    FLASKY_ADMIN = 'noreply@zhoufeiyu.com'
+    FLASKY_ADMIN = 'fynet86@gmail.com'
 
     @staticmethod
     def init_app(app):

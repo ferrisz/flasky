@@ -146,7 +146,8 @@ def change_email_request():
             flash('Invalid email or password.')
     return render_template('auth/change_email.html', form=form)
 
-@auth.route('/reset/<token>', methods=['GET','POST'])
+
+@auth.route('/change-email/<token>')
 @login_required
 def change_email(token):
     if current_user.change_email(token):
