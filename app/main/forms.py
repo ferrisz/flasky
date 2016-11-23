@@ -1,7 +1,7 @@
 #!/usr/local/python
 # coding=utf-8
 # Created by Ferris on 2016/11/10
-
+from flask.ext.pagedown.fields import PageDownField
 from flask_wtf import Form
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, Regexp
@@ -9,9 +9,6 @@ from wtforms.validators import DataRequired, Length, Email, Regexp
 from app.models import Role
 
 
-class NameForm(Form):
-    name = StringField('What is your name?', validators=[DataRequired()])
-    submit = SubmitField('Submit')
 
 class EditProfileForm(Form):
     name = StringField('Real name', validators=[Length(0, 64)])
@@ -49,5 +46,5 @@ class EditProfileAdminForm(Form):
             raise ValueError('Username already in use.')
 
 class PostForm(Form):
-    body = TextAreaField("What's on your mind?", validators=[DataRequired()])
+    body = PageDownField("What's on your mind?", validators=[DataRequired()])
     submit = SubmitField('Submit')
