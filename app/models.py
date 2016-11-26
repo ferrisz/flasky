@@ -86,6 +86,13 @@ class Post(db.Model):
 
 db.event.listen(Post.body, 'set', Post.on_changed_body)
 
+class Follow(db.Model):
+    __tablename__ = 'follows'
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -101,6 +108,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     avatar_hash = db.Column(db.String(32))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    followed = db.relationship('Follow', foreign_key=[Follow.follower_id],
+                               backref='')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -226,6 +235,8 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+
 
 class AnonymousUser(AnonymousUserMixin):
     def can(self, permissions):
