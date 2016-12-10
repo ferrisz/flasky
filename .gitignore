@@ -153,5 +153,4 @@ docs/_build/
 
 # PyBuilder
 target/
-app/static/
-migrations/
+
