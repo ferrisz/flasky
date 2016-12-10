@@ -8,14 +8,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    MAIL_SERVER = 'smtpdm.aliyun.com'
+    MAIL_SERVER = ''
     MAIL_PORT = 25
     MAIL_USE_TLS = False
-    MAIL_USERNAME = 'noreply@zhoufeiyu.com'
-    MAIL_PASSWORD = '12345zxcvb'
+    MAIL_USERNAME = ''
+    MAIL_PASSWORD = ''
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SUBJECT_SENDER = 'Flasky Admin <noreply@zhoufeiyu.com>'
-    FLASKY_ADMIN = 'fynet86@gmail.com'
+    FLASKY_ADMIN = ''
     FLASKY_POSTS_PER_PAGE = 20
     FLASKY_FOLLOWERS_PER_PAGE = 50
     FLASKY_COMMENTS_PER_PAGE = 30
@@ -30,10 +30,10 @@ class DevelopmentConfig(Config):
 
     # DatabaseConfig
     server_type = 'mysql'  # mysql pg
-    server_host = '119.29.136.24'
+    server_host = 'localhost'
     server_port = '3306'
-    server_user = 'flasky'
-    server_pass = 'flasky'
+    server_user = 'root'
+    server_pass = ''
     server_db = 'flasky'
     server_charset = 'utf8mb4'
 
@@ -52,10 +52,10 @@ class TestingConfig(Config):
 
     # DatabaseConfig
     server_type = 'mysql'  # mysql pg
-    server_host = '119.29.136.24'
+    server_host = 'localhost'
     server_port = '3306'
-    server_user = 'flasky'
-    server_pass = 'flasky'
+    server_user = 'root'
+    server_pass = ''
     server_db = 'flasky'
     server_charset = 'utf8mb4'
 
@@ -72,10 +72,10 @@ class TestingConfig(Config):
 class ProductionConfig(Config):
     # DatabaseConfig
     server_type = 'mysql'  # mysql pg
-    server_host = '119.29.136.24'
+    server_host = 'localhost'
     server_port = '3306'
-    server_user = 'flasky'
-    server_pass = 'flasky'
+    server_user = 'root'
+    server_pass = ''
     server_db = 'flasky'
     server_charset = 'utf8mb4'
 
