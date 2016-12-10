@@ -17,6 +17,7 @@ class Config:
     FLASKY_MAIL_SUBJECT_SENDER = 'Flasky Admin <noreply@zhoufeiyu.com>'
     FLASKY_ADMIN = 'fynet86@gmail.com'
     FLASKY_POSTS_PER_PAGE = 20
+    FLASKY_FOLLOWERS_PER_PAGE = 50
 
     @staticmethod
     def init_app(app):
